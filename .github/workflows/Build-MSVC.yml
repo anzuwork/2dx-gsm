@@ -4,6 +4,11 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      target_ref:
+        description: 'commit hash'
+        required: false
+        type: string
 
 jobs:
   build:
@@ -12,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.target_ref || github.ref }}
 
       - name: Get commit hash
         id: vars
